@@ -4,49 +4,6 @@ import os
 import inspect
 import json
 
-# KEYS_INCLUDED = {
-#     "default": [
-#         "author",
-#         "author_email",
-#         "license_title",
-#         "notes",
-#         "url",
-#         "tags",
-#         "extras"
-#     ],
-#     "dataset": [
-#         "license_title",
-#         "temporal_resolution",
-#         "spatial_resolution",
-#         "was_derived_from",
-#         "theme",
-#         "tags",
-#         "is_version_of",
-#         "is_part_of",
-#         "notes",
-#         "quality_metrics",
-#         "conforms_to",
-#         "temporal_start",
-#         "temporal_end",
-#         "documentation",
-#         "url"
-#     ],
-#     "process": [
-#         "documentation",
-#         "used",
-#         "generated",
-#         "category",
-#         "notes"
-#     ],
-#     "workflow": [
-#         "documentation",
-#         "source_code",
-#         "rel_processes",
-#         "rel_datasets",
-#         "notes"
-#     ]
-# }
-
 DEFAULT_KEYS =  ["author", "author_email", "license_title",
         "notes", "url", "tags", "extras"]
 
