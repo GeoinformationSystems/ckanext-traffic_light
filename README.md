@@ -1,44 +1,15 @@
-.. You should enable this project on travis-ci.org and coveralls.io to make
-   these badges work. The necessary Travis and Coverage config files have been
-   generated for you.
 
-.. image:: https://travis-ci.org/rue-a/ckanext-traffic_light.svg?branch=master
-    :target: https://travis-ci.org/rue-a/ckanext-traffic_light
 
-.. image:: https://coveralls.io/repos/rue-a/ckanext-traffic_light/badge.svg
-  :target: https://coveralls.io/r/rue-a/ckanext-traffic_light
 
-.. image:: https://img.shields.io/pypi/v/ckanext-traffic_light.svg
-    :target: https://pypi.org/project/ckanext-traffic_light/
-    :alt: Latest Version
+# ckanext-traffic_light
 
-.. image:: https://img.shields.io/pypi/pyversions/ckanext-traffic_light.svg
-    :target: https://pypi.org/project/ckanext-traffic_light/
-    :alt: Supported Python versions
-
-.. image:: https://img.shields.io/pypi/status/ckanext-traffic_light.svg
-    :target: https://pypi.org/project/ckanext-traffic_light/
-    :alt: Development Status
-
-.. image:: https://img.shields.io/pypi/l/ckanext-traffic_light.svg
-    :target: https://pypi.org/project/ckanext-traffic_light/
-    :alt: License
-
-=============
-ckanext-traffic_light
-=============
-
-.. Put a description of your extension here:
-   What does it do? What features does it have?
-   Consider including some screenshots or embedding a video!
-
+The extension will add a picture of a red, yellow or green traffic light to each metadata record. The color indicates the proportion of the filled optional metadata fields for the according record. The picture is furthermore attached to each dataset in the search results.
 
 ------------
 Requirements
 ------------
 
-For example, you might want to mention here which versions of CKAN this
-extension works with.
+CKAN 2.9 with Python 2.7
 
 
 ------------
@@ -100,9 +71,9 @@ CKAN schema. If you want to always use this fallback keys, just set the content 
 }
 ```
 
-The default content of the file is based on the GeoKur metadata schemas 
-(https://github.com/GeoinformationSystems/ckanext-scheming, 
-https://zenodo.org/record/4916698):
+The default content of the file (based on the GeoKur metadata schemas 
+https://github.com/GeoinformationSystems/ckanext-scheming, 
+https://zenodo.org/record/4916698) is:
 
 ```json
 {
