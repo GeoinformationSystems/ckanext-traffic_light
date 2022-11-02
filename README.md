@@ -89,7 +89,7 @@ https://zenodo.org/record/4916698) is:
 Developer installation
 ----------------------
 
-To install ckanext-traffic_light for development, activate your CKAN virtualenv and
+To install ckanext-traffic_light for development, activate your CKAN virtualenv (`. /usr/lib/ckan/default/bin/activate`) and
 do::
 
     git clone https://github.com/rue-a/ckanext-traffic_light.git
