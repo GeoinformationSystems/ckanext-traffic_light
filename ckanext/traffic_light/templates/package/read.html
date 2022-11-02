@@ -19,11 +19,11 @@
             {% set percentage = h.traffic_light_percentage_of_filled_fields(pkg) %}
             {% set tooltip = percentage|round|int|string %}
             {% if percentage < 30 %}
-                <img src="/traffic_light_extension/red_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="red light">
+                <img src="/red_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="red light">
             {% elif percentage < 80 %}
-                <img src="/traffic_light_extension/yellow_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="yellow light">
+                <img src="/yellow_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="yellow light">
             {% else %}
-                <img src="/traffic_light_extension/green_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="green light">
+                <img src="/green_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="green light">
             {% endif %} 
         </div>
     </div>
