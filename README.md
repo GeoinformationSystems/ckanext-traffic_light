@@ -29,15 +29,15 @@ CKAN schema. If you want to always use this fallback keys, just set the content 
 ```json
 {
     "<metadata_schema_name_1>": [
-        "key_1_of_metadata_schema_1",
-        "key_2_of_metadata_schema_1",
-        "key_3_of_metadata_schema_1",
+        "<key_1_of_metadata_schema_1>",
+        "<key_2_of_metadata_schema_1>",
+        "<key_3_of_metadata_schema_1>",
         ...
     ],
     "<metadata_schema_name_2>": [
-        "key_1_of_metadata_schema_2",
-        "key_2_of_metadata_schema_2",
-        "key_3_of_metadata_schema_2",
+        "<key_1_of_metadata_schema_2>",
+        "<key_2_of_metadata_schema_2>",
+        "<key_3_of_metadata_schema_2>",
         ...
     ],
     ...
