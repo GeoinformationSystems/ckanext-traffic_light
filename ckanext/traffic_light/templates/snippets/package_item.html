@@ -1,0 +1,30 @@
+{% ckan_extends %}
+
+{% block content %}
+  <div class="row">
+    <div class="dataset-content col-sm-11">
+      {% block heading %}  
+        {{super()}}
+      {% endblock %}
+      {% block banner %}
+        {{super()}}
+      {% endblock %}
+      {% block notes %}
+        {{super()}}
+      {% endblock %}
+    </div>
+    <div class="col-sm-1">
+      {% set percentage = h.traffic_light_percentage_of_filled_fields(package) %}
+        {% if percentage < 30 %}
+        <img src="/traffic_light_extension/red_light.png" height="80" alt="red light">
+        {% elif percentage < 80 %}
+        <img src="/traffic_light_extension/yellow_light.png" height="80" alt="yellow light">
+        {% else %}
+        <img src="/traffic_light_extension/green_light.png" height="80" alt="green light">
+        {% endif %} 
+    </div>
+  </div>
+  {% block resources %}
+    {{super()}}
+  {% endblock %}
+{% endblock %}
