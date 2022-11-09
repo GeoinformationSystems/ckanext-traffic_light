@@ -13,10 +13,18 @@
         <div class="col-sm-10" style="text-align:justify;">
             {% block package_notes %}
                 {{super()}}
+                
             {% endblock %}
+            {% if (h.traffic_light_apply_weights())%}
+            true
+                {{h.traffic_light_apply_weights()}}
+            {% else %}
+                false
+                {{h.traffic_light_apply_weights()}}
+            {% endif %}
         </div>
         <div class="col-sm-2">
-            {% set percentage = h.traffic_light_percentage_of_filled_fields(pkg) %}
+            {% set percentage = h.traffic_light_evaluate_fields(pkg) %}
             {% set tooltip = percentage|round|int|string %}
             {% if percentage < 30 %}
                 <img src="/red_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="red light">

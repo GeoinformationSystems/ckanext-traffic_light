@@ -22,7 +22,7 @@ def load_json(json_name):
     return json_contents
     
 
-def percentage_of_filled_fields(pkg):
+def evaluate_fields(pkg):
     keys_included = load_json('fields.json')
 
     # select subset of keys based on package type
@@ -48,6 +48,11 @@ def percentage_of_filled_fields(pkg):
 
     return percentage
 
+def apply_weights():
+    try:
+        return toolkit.asbool(toolkit.config.get('ckanext.traffic_light.weights', 'false'))
+    except ValueError:
+        return False
 
 class TrafficLightPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
@@ -69,10 +74,14 @@ class TrafficLightPlugin(plugins.SingletonPlugin):
     
     # get_helpers() is a method from ITemplateHelpers
     def get_helpers(self):
-        '''register the percentage_of_filled_fields() function
+        '''register the evaluate_fields() function
         as a template helper function.'''
 
         # Template helper function names should begin with the name of the
         # extension they belong to, to avoid clashing with functions from
         # other extensions.
-        return {'traffic_light_percentage_of_filled_fields': percentage_of_filled_fields}
+        return {
+            'traffic_light_evaluate_fields': evaluate_fields,
+            'traffic_light_apply_weights': apply_weights
+        }
+
