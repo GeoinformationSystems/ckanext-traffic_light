@@ -23,7 +23,7 @@ def load_json(json_name):
     
 
 def percentage_of_filled_fields(pkg):
-    keys_included = load_json('keys_included.json')
+    keys_included = load_json('fields.json')
 
     # select subset of keys based on package type
     try: 

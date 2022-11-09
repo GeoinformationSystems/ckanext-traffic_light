@@ -16,15 +16,15 @@ CKAN 2.9 with Python 2.7
 Config settings
 ---------------
 
-Edit `keys_included.json` to define which metadata fields should be included in the 
+Edit `fields.json` to define which metadata fields should be included in the 
 calculation of the percentage of filled optional metadata fields. Don't include any
 mandatory field here, since it obviously doesn't make sense. Fields can be defined for 
 differnet metadata schemas (The file you download with the extension, defines fields 
 that are included in the calculation for the three different metadata schemas `dataset`,
 `process` and `workflow`.). If a metadataset has a schema that is not reference in 
-`keys_included.json`, it falls back to a default list of keys that is based on the default 
+`fields.json`, it falls back to a default list of keys that is based on the default 
 CKAN schema. If you want to always use this fallback keys, just set the content of 
-`keys_included.json` to `{}`. The general schema of `keys_included.json` is:
+`fields.json` to `{}`. The general schema of `fields.json` is:
 
 ```json
 {
