@@ -23,36 +23,70 @@ def load_json(json_name):
     
 
 def evaluate_fields(pkg):
-    keys_included = load_json('fields.json')
+    schema = None
+    weights = apply_weights()
+    if weights:
+        schema = load_json('fields_weighted.json')
+    else:
+        schema = load_json('fields.json')
 
     # select subset of keys based on package type
     try: 
-        keys_included = keys_included[pkg['type']]
+        fields = schema[pkg['type']]
     # use fallback if no matching type was found
     except KeyError :
-        keys_included = DEFAULT_KEYS
+        fields = DEFAULT_KEYS
+        weights = False
 
-    filled_fields = 0
-    for key in keys_included:
-        # check if key exists
-        if key in pkg:
-            # check if key has value (None, "", [] and {} are
-            # evaluated as false in python)
-            if pkg[key]:
-                filled_fields = filled_fields + 1
-
-    percentage = 0
-    # this if is only for safty reasons
-    if len(keys_included):
-        percentage = (float(filled_fields)/float(len(keys_included)))*100
-
-    return percentage
+    if weights:
+        max_value = 0
+        filled_value = 0
+        for field in fields:
+            max_value = max_value + field["weight"]
+            if field["field_name"] in pkg:
+                if pkg[field["field_name"]]:
+                    filled_value = filled_value + field["weight"] 
+        return float(filled_value)/float(max_value)
+    else:
+        filled_fields = 0
+        for key in fields:
+            # check if key exists
+            if key in pkg:
+                # check if key has value (None, "", [] and {} are
+                # evaluated as false in python)
+                if pkg[key]:
+                    filled_fields = filled_fields + 1
+        percentage = 0
+        # this if is only for safty reasons
+        if len(fields):
+            percentage = (float(filled_fields)/float(len(fields)))
+        return percentage
 
 def apply_weights():
+    # toolkit.config.get(...) reads value of "ckanext.traffic_light.weights" 
+    # from ckan.ini and sets value to false if no variable is provided.
+
+    # toolkit.asbool(...) evaluates a string as bool.
+
+    # with try ... except ValueError we catch typos from ckan.ini, e.g.,
+    # "ckanext.traffic_light = fasle" and set the variable to False in case.
+
     try:
         return toolkit.asbool(toolkit.config.get('ckanext.traffic_light.weights', 'false'))
     except ValueError:
         return False
+
+def get_yellow_limit():
+    try:
+        return float(toolkit.config.get('ckanext.traffic_light.yellow_limit', '0.3'))
+    except ValueError:
+        return 0.3
+
+def get_green_limit():
+    try:
+        return float(toolkit.config.get('ckanext.traffic_light.green_limit', '0.8'))
+    except ValueError:
+        return 0.8
 
 class TrafficLightPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
@@ -82,6 +116,8 @@ class TrafficLightPlugin(plugins.SingletonPlugin):
         # other extensions.
         return {
             'traffic_light_evaluate_fields': evaluate_fields,
-            'traffic_light_apply_weights': apply_weights
+            'traffic_light_apply_weights': apply_weights,
+            'traffic_light_get_yellow_limit': get_yellow_limit,
+            'traffic_light_get_green_limit': get_green_limit
         }
 

@@ -1,0 +1,108 @@
+{
+    "dataset": [
+        {
+            "field_name": "license_title",
+            "weight": 1
+        },
+        {
+            "field_name": "temporal_resolution",
+            "weight": 1
+        },
+        {
+            "field_name": "spatial_resolution",
+            "weight": 1
+        },
+        {
+            "field_name": "was_derived_from",
+            "weight": 1
+        },
+        {
+            "field_name": "theme",
+            "weight": 1
+        },
+        {
+            "field_name": "tags",
+            "weight": 1
+        },
+        {
+            "field_name": "is_version_of",
+            "weight": 1
+        },
+        {
+            "field_name": "is_part_of",
+            "weight": 1
+        },
+        {
+            "field_name": "notes",
+            "weight": 1
+        },
+        {
+            "field_name": "quality_metrics",
+            "weight": 1
+        },
+        {
+            "field_name": "conforms_to",
+            "weight": 1
+        },
+        {
+            "field_name": "temporal_start",
+            "weight": 1
+        },
+        {
+            "field_name": "temporal_end",
+            "weight": 1
+        },
+        {
+            "field_name": "documentation",
+            "weight": 1
+        },
+        {
+            "field_name": "url",
+            "weight": 1
+        }
+    ],
+    "process": [
+        {
+            "field_name": "documentation",
+            "weight": 1
+        },
+        {
+            "field_name": "used",
+            "weight": 1
+        },
+        {
+            "field_name": "generated",
+            "weight": 1
+        },
+        {
+            "field_name": "category",
+            "weight": 1
+        },
+        {
+            "field_name": "notes",
+            "weight": 1
+        }
+    ],
+    "workflow": [
+        {
+            "field_name": "documentation",
+            "weight": 1
+        },
+        {
+            "field_name": "source_code",
+            "weight": 1
+        },
+        {
+            "field_name": "rel_processes",
+            "weight": 1
+        },
+        {
+            "field_name": "rel_datasets",
+            "weight": 1
+        },
+        {
+            "field_name": "notes",
+            "weight": 1
+        }
+    ]
+}

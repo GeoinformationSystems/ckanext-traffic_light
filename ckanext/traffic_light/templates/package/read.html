@@ -17,22 +17,32 @@
             {% endblock %}
             {% if (h.traffic_light_apply_weights())%}
             true
-                {{h.traffic_light_apply_weights()}}
+                {{ h.traffic_light_evaluate_fields(pkg)}}
             {% else %}
                 false
                 {{h.traffic_light_apply_weights()}}
             {% endif %}
         </div>
         <div class="col-sm-2">
-            {% set percentage = h.traffic_light_evaluate_fields(pkg) %}
-            {% set tooltip = percentage|round|int|string %}
-            {% if percentage < 30 %}
-                <img src="/red_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="red light">
-            {% elif percentage < 80 %}
-                <img src="/yellow_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="yellow light">
+            {% set evaluation = h.traffic_light_evaluate_fields(pkg) %}            
+            {% if not (h.traffic_light_apply_weights())%}
+                {% set tooltip = (evaluation*100)|round|int|string %}
+                {% if evaluation < h.traffic_light_get_yellow_limit() %}
+                    <img src="/red_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="red light">
+                {% elif evaluation < h.traffic_light_get_green_limit() %}
+                    <img src="/yellow_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="yellow light">
+                {% else %}
+                    <img src="/green_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="green light">
+                {% endif %} 
             {% else %}
-                <img src="/green_light.png" height="140" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="green light">
-            {% endif %} 
+                {% if evaluation < h.traffic_light_get_yellow_limit() %}
+                    <img src="/red_light.png" height="140" alt="red light">
+                {% elif evaluation < h.traffic_light_get_green_limit() %}
+                    <img src="/yellow_light.png" height="140" alt="yellow light">
+                {% else %}
+                    <img src="/green_light.png" height="140" alt="green light">
+                {% endif %} 
+            {% endif %}
         </div>
     </div>
 {% endblock %}

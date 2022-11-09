@@ -19,7 +19,7 @@ Config settings
 Edit `fields.json` to define which metadata fields should be included in the 
 calculation of the percentage of filled optional metadata fields. Don't include any
 mandatory field here, since it obviously doesn't make sense. Fields can be defined for 
-differnet metadata schemas (The file you download with the extension, defines fields 
+different metadata schemas (The file you download with the extension, defines fields 
 that are included in the calculation for the three different metadata schemas `dataset`,
 `process` and `workflow`.). If a metadataset has a schema that is not reference in 
 `fields.json`, it falls back to a default list of keys that is based on the default 
