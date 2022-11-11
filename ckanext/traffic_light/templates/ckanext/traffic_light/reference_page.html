@@ -1,0 +1,78 @@
+{% extends "page.html" %}
+
+{% block primary %}
+<div class = "row">
+    <h1>Traffic Light Extension Reference Page</h1>
+</div>
+
+<div class = "row">
+    This page gives an overview over the configuration of the traffic light extension.
+    The extension shows a traffic light with either a green, yellow or red light, based
+    on the evaluation of provision of metadata for each metadata record. Extension users 
+    can can configure which fields - depending on metadata record type - are evaluated; 
+    if weights for these fields should be included in the evaluation; and at which limits 
+    the traffic light switches color.
+</div>
+<div class = "row">
+    <h3>Weights enabled:</h3>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-11" style="font-size: larger;"><em>{{ h.traffic_light_apply_weights() }}</em></div>
+</div>
+
+<div class="row">
+    <h3>Traffic Light Color Value Ranges</h3>
+    <p>The evaluation of the metadata provision always yields a value between 0 and 1. Depending 
+        on this value the traffic light either shows a green, yellow or red light. If no weights 
+        are applied, this value resolves to the percentage of filled metadata fields that are 
+        inculded in the calculation. 
+    </p>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-11" style="font-size: larger;">
+        Green Light: <em>{{h.traffic_light_get_green_limit()}} &#8804; value &#8804; 1</em><br>
+        Yellow Light: <em>{{h.traffic_light_get_yellow_limit()}} &#8804; value < {{h.traffic_light_get_green_limit()}}</em><br>
+        Red Light: <em>0 &#8804; value < {{h.traffic_light_get_yellow_limit()}}</em>
+    </div>
+</div>
+<div class="row">
+    <h3>Evaluated Metadata Fields</h3>
+    <p>Users of the extension can - for each metadata record type in the catalog - specify which metadata
+        fields (and possibly with which weight) are evalauted with this extension, e.g., all optional 
+        metadata fields.
+    </p>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-6">
+        {% set record_types = h.traffic_light_get_metadata_record_types()%}
+        <hr>
+        {% for record_type in record_types %}
+            <em style="font-size: larger;">{{record_type}}</em>
+            <br>
+            {{h.traffic_light_get_record_type_label(record_type)}}
+            <br>
+            <table class="table table-striped table-bordered table-condensed">
+                <tr>
+                    <th>Field Name</th>
+                    <th>Weight</th>
+                </tr>
+            {% for field in h.traffic_light_get_evaluated_metadata_record_fields(record_type) %}
+                <tr>
+                    <td>{{field}}, {{h.traffic_light_get_field_label(record_type, field)}}</td>
+                    <td>
+                        {% if h.traffic_light_apply_weights() %}
+                        {{h.traffic_light_get_weight(record_type, field)}}
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+            <hr>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block secondary %}
+{% endblock %}

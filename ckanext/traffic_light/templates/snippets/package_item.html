@@ -14,25 +14,18 @@
       {% endblock %}
     </div>
     <div class="col-sm-1">
-      {% set evaluation = h.traffic_light_evaluate_fields(package) %}            
-            {% if not (h.traffic_light_apply_weights())%}
-                {% set tooltip = (evaluation*100)|round|int|string %}
-                {% if evaluation < h.traffic_light_get_yellow_limit() %}
-                    <img src="/red_light.png" height="100" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="red light">
-                {% elif evaluation < h.traffic_light_get_green_limit() %}
-                    <img src="/yellow_light.png" height="100" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="yellow light">
-                {% else %}
-                    <img src="/green_light.png" height="100" title="{{tooltip}}% of optional meta-&#10data fields are filled." alt="green light">
-                {% endif %} 
-            {% else %}
-                {% if evaluation < h.traffic_light_get_yellow_limit() %}
-                    <img src="/red_light.png" height="100" alt="red light">
-                {% elif evaluation < h.traffic_light_get_green_limit() %}
-                    <img src="/yellow_light.png" height="100" alt="yellow light">
-                {% else %}
-                    <img src="/green_light.png" height="100" alt="green light">
-                {% endif %} 
-            {% endif %}
+      {% set evaluation = h.traffic_light_evaluate_fields(package) %}        
+      {% set tooltip = (evaluation*100)|round|int|string + "% of optional meta-\ndata fields are filled."%}
+      {% if h.traffic_light_apply_weights()%}
+        {% set tooltip = "The weighted evaluation of metadata\nprovision yielded " + (evaluation*100)|round|int|string + " of 100 points." %}
+      {% endif %}            
+      {% if evaluation < h.traffic_light_get_yellow_limit() %}
+          <img src="/red_light.png" height="100" title="{{tooltip}}" alt="red light">
+      {% elif evaluation < h.traffic_light_get_green_limit() %}
+          <img src="/yellow_light.png" height="100" title="{{tooltip}}" alt="yellow light">
+      {% else %}
+          <img src="/green_light.png" height="100" title="{{tooltip}}" alt="green light">
+      {% endif %}
     </div>
   </div>
   {% block resources %}

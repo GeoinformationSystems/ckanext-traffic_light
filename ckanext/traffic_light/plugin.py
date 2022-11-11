@@ -3,9 +3,10 @@ import ckan.plugins.toolkit as toolkit
 import os
 import inspect
 import json
+from ckanext.scheming import helpers as scheming_helpers
 
-DEFAULT_KEYS =  ["author", "author_email", "license_title",
-        "notes", "url", "tags", "extras"]
+DEFAULT_FIELD_NAMES =  ['author', 'author_email', 'license_title',
+        'notes', 'url', 'tags', 'extras']
 
 def load_json(json_name):
     json_contents = None
@@ -20,7 +21,51 @@ def load_json(json_name):
         with open(p) as file:    
             json_contents = json.load(file)
     return json_contents
-    
+
+def get_metadata_record_types():
+    schema = None
+    weights = apply_weights()
+    if weights:
+        schema = load_json('fields_weighted.json')
+    else:
+        schema = load_json('fields.json')
+    if schema.keys():
+        return schema.keys()
+    else:
+        # if schema is empty  return CKANs default
+        # metadata record type name.
+        return ['dataset']
+
+def get_evaluated_metadata_record_fields(record_type):
+    schema = None
+    weights = apply_weights()
+    if weights:
+        schema = load_json('fields_weighted.json')
+    else:
+        schema = load_json('fields.json')
+    if schema[record_type]:
+        if weights:
+            field_names = [k['field_name'] for k in schema[record_type]]
+            return field_names
+        else: 
+            return schema[record_type]
+    else:
+        return DEFAULT_FIELD_NAMES
+
+def get_weight(record_type, field_name):
+    schema = load_json('fields_weighted.json')
+    if schema:
+        for item in schema[record_type]:
+            if item['field_name'] == field_name:
+                return item['weight']
+    return None
+
+def get_record_type_label(record_type):
+    label = scheming_helpers.scheming_get_dataset_schema(record_type)
+    return label
+
+def get_field_label(record_type, field_name):
+    return None
 
 def evaluate_fields(pkg):
     schema = None
@@ -35,26 +80,26 @@ def evaluate_fields(pkg):
         fields = schema[pkg['type']]
     # use fallback if no matching type was found
     except KeyError :
-        fields = DEFAULT_KEYS
+        fields = DEFAULT_FIELD_NAMES
         weights = False
 
     if weights:
         max_value = 0
         filled_value = 0
         for field in fields:
-            max_value = max_value + field["weight"]
-            if field["field_name"] in pkg:
-                if pkg[field["field_name"]]:
-                    filled_value = filled_value + field["weight"] 
+            max_value = max_value + field['weight']
+            if field['field_name'] in pkg:
+                if pkg[field['field_name']]:
+                    filled_value = filled_value + field['weight'] 
         return float(filled_value)/float(max_value)
     else:
         filled_fields = 0
-        for key in fields:
-            # check if key exists
-            if key in pkg:
-                # check if key has value (None, "", [] and {} are
+        for field in fields:
+            # check if field exists
+            if field in pkg:
+                # check if field has value (None, '', [] and {} are
                 # evaluated as false in python)
-                if pkg[key]:
+                if pkg[field]:
                     filled_fields = filled_fields + 1
         percentage = 0
         # this if is only for safty reasons
@@ -63,13 +108,13 @@ def evaluate_fields(pkg):
         return percentage
 
 def apply_weights():
-    # toolkit.config.get(...) reads value of "ckanext.traffic_light.weights" 
+    # toolkit.config.get(...) reads value of 'ckanext.traffic_light.weights' 
     # from ckan.ini and sets value to false if no variable is provided.
 
     # toolkit.asbool(...) evaluates a string as bool.
 
     # with try ... except ValueError we catch typos from ckan.ini, e.g.,
-    # "ckanext.traffic_light = fasle" and set the variable to False in case.
+    # 'ckanext.traffic_light = fasle' and set the variable to False in case.
 
     try:
         return toolkit.asbool(toolkit.config.get('ckanext.traffic_light.weights', 'false'))
@@ -90,14 +135,18 @@ def get_green_limit():
 
 class TrafficLightPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
-
-    # implement ITemplateHelpers interface 
-    # (to register new helper fucntions)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IRoutes, inherit=True)
+    
+    def after_map(self, map):
+        map.connect(
+            'traffic-light-reference',
+            '/traffic-light-reference',
+            controller = 'ckanext.traffic_light.controller:TrafficLightController',
+            action = 'render_reference_page'
+        )
+        return map
 
-    # implement IDatasetForm interface 
-    # (to access the dataset schemes)
-    # plugins.implements(plugins.IDatasetForm)
 
 
     def update_config(self, config_):
@@ -118,6 +167,11 @@ class TrafficLightPlugin(plugins.SingletonPlugin):
             'traffic_light_evaluate_fields': evaluate_fields,
             'traffic_light_apply_weights': apply_weights,
             'traffic_light_get_yellow_limit': get_yellow_limit,
-            'traffic_light_get_green_limit': get_green_limit
+            'traffic_light_get_green_limit': get_green_limit,
+            'traffic_light_get_metadata_record_types': get_metadata_record_types,
+            'traffic_light_get_evaluated_metadata_record_fields': get_evaluated_metadata_record_fields,
+            'traffic_light_get_weight': get_weight,
+            'traffic_light_get_record_type_label': get_record_type_label,
+            'traffic_light_get_field_label': get_field_label
         }
 
