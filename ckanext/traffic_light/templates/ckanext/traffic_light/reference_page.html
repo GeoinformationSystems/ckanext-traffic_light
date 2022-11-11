@@ -21,7 +21,7 @@
 <div class = "row">
     <h3>Weights enabled:</h3>
     <div class="col-sm-1"></div>
-    <div class="col-sm-11" style="font-size: larger;"><em>{{ h.traffic_light_apply_weights() }}</em></div>
+    <div class="col-sm-11" style="font-size: larger;"><mark>{{ h.traffic_light_apply_weights() }}</mark></div>
 </div>
 
 <div class="row">
@@ -33,9 +33,9 @@
     </p>
     <div class="col-sm-1"></div>
     <div class="col-sm-11" style="font-size: larger;">
-        Green Light: <em>{{h.traffic_light_get_green_limit()}} &#8804; value &#8804; 1</em><br>
-        Yellow Light: <em>{{h.traffic_light_get_yellow_limit()}} &#8804; value < {{h.traffic_light_get_green_limit()}}</em><br>
-        Red Light: <em>0 &#8804; value < {{h.traffic_light_get_yellow_limit()}}</em>
+        Green Light: <mark>{{h.traffic_light_get_green_limit()}} &#8804; value &#8804; 1</mark><br>
+        Yellow Light: <mark>{{h.traffic_light_get_yellow_limit()}} &#8804; value < {{h.traffic_light_get_green_limit()}}</mark><br>
+        Red Light: <mark>0 &#8804; value < {{h.traffic_light_get_yellow_limit()}}</mark>
     </div>
 </div>
 <div class="row">
