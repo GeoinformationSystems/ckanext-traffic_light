@@ -22,11 +22,11 @@
               {% set tooltip = "The weighted evaluation of metadata\nprovision yielded " + (evaluation*100)|round|int|string + " of 100 points." %}
             {% endif %}
             {% if evaluation < h.traffic_light_get_yellow_limit() %}
-                <img src="/red_light.png" height="140" title="{{tooltip}}" alt="red light">
+                <a href="/traffic-light-reference"><img src="/red_light.png" height="140" title="{{tooltip}}" alt="red light"></a>
             {% elif evaluation < h.traffic_light_get_green_limit() %}
-                <img src="/yellow_light.png" height="140" title="{{tooltip}}" alt="yellow light">
+                <a href="/traffic-light-reference"><img src="/yellow_light.png" height="140" title="{{tooltip}}" alt="yellow light"></a>
             {% else %}
-                <img src="/green_light.png" height="140" title="{{tooltip}}" alt="green light">
+                <a href="/traffic-light-reference"><img src="/green_light.png" height="140" title="{{tooltip}}" alt="green light"></a>
             {% endif %}
         </div>
     </div>

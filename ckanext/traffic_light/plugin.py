@@ -3,7 +3,12 @@ import ckan.plugins.toolkit as toolkit
 import os
 import inspect
 import json
-from ckanext.scheming import helpers as scheming_helpers
+
+scheming = True
+try:
+    from ckanext.scheming.helpers import scheming_get_dataset_schema as get_scheming_schema
+except:
+    scheming = False
 
 DEFAULT_FIELD_NAMES =  ['author', 'author_email', 'license_title',
         'notes', 'url', 'tags', 'extras']
@@ -61,11 +66,20 @@ def get_weight(record_type, field_name):
     return None
 
 def get_record_type_label(record_type):
-    label = scheming_helpers.scheming_get_dataset_schema(record_type)
-    return label
+    if scheming:
+        scheming_schema = get_scheming_schema(record_type)
+        return scheming_schema['about']
+    else:
+        return None
 
 def get_field_label(record_type, field_name):
-    return None
+    if scheming:
+        scheming_schema = get_scheming_schema(record_type)
+        for field in scheming_schema['dataset_fields']:
+            if field['field_name'] == field_name:
+                return field['label']
+    else:
+        return None
 
 def evaluate_fields(pkg):
     schema = None
