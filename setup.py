@@ -18,7 +18,7 @@ setup(
     # http://packaging.python.org/en/latest/tutorial.html#version
     version='0.0.1',
 
-    description='''For each metadata record: Add a green, yellow or red traffic light picture to the frontend page of the record that indicates the proportion of filled optional metadata fields of this record.''',
+    description='''The extension will add an image of a red, yellow or green traffic light to each metadata record that indicates the metadata provision for this record. With default settings, the evaluation resolves to a percentage value that represents the proportion of filled optional metadata fields. The image is furthermore attached to each dataset in the search results.''',
     long_description=long_description,
     long_description_content_type='text/x-rst',
 
@@ -27,7 +27,7 @@ setup(
             'ckanext-traffic_light',
 
     # Author details
-    author='''rue_a''',
+    author='''arne rümmler''',
     author_email='''arne.ruemmler@tu-dresden.de, arne.ruemmler@gmail.com''',
 
     # Choose your license
