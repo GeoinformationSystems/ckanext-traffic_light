@@ -23,7 +23,7 @@ Requirements
 ------------
 
 -  Tested on **CKAN 2.9** with **Python 2.7**
--  Full fucntionality only provided with
+-  Full functionality only provided with
    `ckanext-scheming <https://github.com/ckan/ckanext-scheming>`__
    (required to find the labels of the metadata fields as shown on the
    reference page)

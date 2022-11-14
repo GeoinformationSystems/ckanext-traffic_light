@@ -15,7 +15,7 @@ breaking points the traffic light switches color, and which fields
 ## Requirements
 
 - Tested on __CKAN 2.9__ with __Python 2.7__
-- Full fucntionality only provided with [ckanext-scheming](https://github.com/ckan/ckanext-scheming) (required to find the labels of the metadata fields as shown on the reference page)
+- Full functionality only provided with [ckanext-scheming](https://github.com/ckan/ckanext-scheming) (required to find the labels of the metadata fields as shown on the reference page)
 
 ## Config settings
 
