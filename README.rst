@@ -185,7 +185,7 @@ virtualenv (``. /usr/lib/ckan/default/bin/activate``) and do:
 
 ::
 
-   git clone https://github.com/rue-a/ckanext-traffic_light.git
+   git clone https://github.com/GeoinformationSystems/ckanext-traffic_light.git
    cd ckanext-traffic_light
    python setup.py develop
    pip install -r dev-requirements.txt
