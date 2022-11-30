@@ -153,7 +153,7 @@ Currently, only developer installation is supported.
 To install ckanext-traffic_light for development, activate your CKAN virtualenv (`. /usr/lib/ckan/default/bin/activate`) and
 do:
 ```
-git clone https://github.com/rue-a/ckanext-traffic_light.git
+git clone https://github.com/GeoinformationSystems/ckanext-traffic_light.git
 cd ckanext-traffic_light
 python setup.py develop
 pip install -r dev-requirements.txt
